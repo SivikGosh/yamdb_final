@@ -23,8 +23,8 @@ jobs:
         python -m flake8
         pytest
 
-  build_image:
+  # build_image:
 
-  deploy:
+  # deploy:
 
-  send_notification:
+  # send_notification:
