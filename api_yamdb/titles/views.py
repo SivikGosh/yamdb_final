@@ -1,10 +1,9 @@
+from api.permissions import IsAdminOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, pagination, viewsets, mixins
+from rest_framework import filters, mixins, pagination, viewsets
 
 from . import models, serializers
 from .filters import TitleFilter
-
-from api.permissions import IsAdminOrReadOnly
 
 
 class BaseViewSet(

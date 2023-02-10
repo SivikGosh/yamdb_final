@@ -1,11 +1,10 @@
+from api.permissions import IsAuthorOrHiAccessOrReadOnly
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from titles.models import Title
 
 from .models import Comment, Review
 from .serializers import CommentSerializer, ReviewSerializer
-
-from api.permissions import IsAuthorOrHiAccessOrReadOnly
-from titles.models import Title
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -18,8 +17,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         title_id = get_object_or_404(
             Title, pk=self.kwargs.get('title_id')
         )
-        review_queryset = Review.objects.filter(title_id=title_id)
-        return review_queryset
+        return Review.objects.filter(title_id=title_id)
 
     def perform_create(self, serializer):
         title_id = get_object_or_404(
@@ -38,8 +36,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         review_id = get_object_or_404(
             Review, pk=self.kwargs.get('review_id')
         )
-        comment_queryset = Comment.objects.filter(review_id=review_id)
-        return comment_queryset
+        return Comment.objects.filter(review_id=review_id)
 
     def perform_create(self, serializer):
         review = get_object_or_404(

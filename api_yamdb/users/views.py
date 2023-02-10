@@ -1,5 +1,6 @@
 import random
 
+from api.permissions import IsAuthenticatedAdmin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions, status, viewsets
@@ -9,12 +10,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
 
+from api_yamdb.settings import EMAIL_HOST_USER
+
 from .models import User
 from .serializers import (TokenSerializer, UserAdminCreateSerializer,
                           UserFieldsSerializer, UserSignUpSerializer)
-
-from api_yamdb.settings import EMAIL_HOST_USER
-from api.permissions import IsAuthenticatedAdmin
 
 
 class UsersViewSet(viewsets.ModelViewSet):
@@ -39,24 +39,6 @@ class UsersViewSet(viewsets.ModelViewSet):
             return Response(
                 serializer.data,
                 status=status.HTTP_200_OK
-            )
-        elif request.method == 'PATCH':
-            new_query_dict = self.request.data.copy()
-            if not request.user.is_admin and not request.user.is_superuser:
-                new_query_dict['role'] = request.user.role
-            serializer = UserFieldsSerializer(
-                user,
-                data=new_query_dict,
-                partial=True
-            )
-            if serializer.is_valid():
-                serializer.save()
-                return Response(
-                    serializer.validated_data,
-                    status=status.HTTP_200_OK
-                )
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST
             )
 
     def retrieve(self, request, username=None):
@@ -105,11 +87,6 @@ class GetAPIToken(APIView):
                 return Response(
                     {'token': str(token)},
                     status=status.HTTP_200_OK
-                )
-            else:
-                return Response(
-                    {'Неверный код'},
-                    status=status.HTTP_400_BAD_REQUEST
                 )
         return Response(
             {'Неверные данные'},

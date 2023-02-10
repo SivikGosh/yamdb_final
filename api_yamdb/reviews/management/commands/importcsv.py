@@ -1,12 +1,11 @@
-import os
 import csv
+import os
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
+from reviews.models import Comment, Review
+from titles.models import Category, Genre, GenreTitle, Title
 from users.models import User
-from titles.models import Title, Genre, Category, GenreTitle
-from reviews.models import Review, Comment
 
 models = {
     User: 'static/data/users.csv',
