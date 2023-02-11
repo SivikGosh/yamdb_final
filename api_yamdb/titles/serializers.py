@@ -54,9 +54,11 @@ class TitleSerializer(serializers.ModelSerializer):
         return title
 
     def get_rating(self, obj):
+        rating = None
         avg_rating = obj.reviews.aggregate(Avg('score'))
         if avg_rating['score__avg']:
-            return int(avg_rating['score__avg'])
+            rating = int(avg_rating['score__avg'])
+        return rating
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
