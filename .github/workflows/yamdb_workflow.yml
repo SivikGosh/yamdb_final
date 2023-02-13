@@ -67,10 +67,11 @@ jobs:
         script: |
           sudo docker pull sivikgosh/api_yamdb
     - name: docker-compose re-build
-      run: |
-        cd infra/
-        sudo docker-compose up -d --build
-        sudo docker-compose image prune -a
+      with:
+        context: infra/
+        script: |
+          sudo docker-compose up -d --build
+          sudo docker-compose image prune -a
 
   send_notification:
     name: Send message to Telegram
