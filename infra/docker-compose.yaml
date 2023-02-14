@@ -10,7 +10,7 @@ services:
     env_file: ./.env
 
   web:
-    image: sivikgosh/api_yamdb:v1
+    image: sivikgosh/api_yamdb
     restart: always
     volumes:
       - static_value:/app/static/
