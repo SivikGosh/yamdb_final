@@ -67,9 +67,9 @@ jobs:
           sudo docker pull sivikgosh/api_yamdb
     - name: Docker-compose Build
       run: |
-        ll
-        # sudo docker-compose up -d --build
-        # sudo docker-compose image prune -a
+        ls -a
+        sudo docker-compose up -d --build
+        sudo docker-compose image prune -a
 
   send_notification:
     name: Send message to Telegram
