@@ -67,7 +67,7 @@ jobs:
           sudo docker pull sivikgosh/api_yamdb
     - name: Docker-compose Build
       run: |
-        cd ../../infra/
+        cd ../
         ls -a
         sudo docker-compose up -d --build
         sudo docker-compose image prune -a
