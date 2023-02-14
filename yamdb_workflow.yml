@@ -59,14 +59,20 @@ jobs:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
+        context: api_yamdb/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           sudo docker pull sivikgosh/api_yamdb
-          sudo docker stop $(sudo docker ps -a -q)
-          sudo docker run --rm -d -p 8080:8080 sivikgosh/api_yamdb
+    - name: docker-compose re-build
+      uses: appleboy/ssh-action@master
+      with:
+        context: infra/
+        script: |
+          sudo docker-compose up -d --build
+          sudo docker-compose image prune -a
 
   send_notification:
     name: Send message to Telegram
