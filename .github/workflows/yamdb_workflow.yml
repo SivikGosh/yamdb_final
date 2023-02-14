@@ -65,6 +65,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
+          ls -a
           sudo docker-compose up -d --build
           sudo docker-compose image prune -a
 
