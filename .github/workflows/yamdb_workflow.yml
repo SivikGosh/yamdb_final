@@ -64,9 +64,9 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          sudo api_yamdb/docker pull sivikgosh/api_yamdb
-          sudo infra/docker-compose up -d --build
-          sudo infra/docker-compose image prune -a
+          sudo api_docker pull sivikgosh/api_yamdb
+          sudo docker-compose up -d --build
+          sudo docker-compose image prune -a
 
   send_notification:
     name: Send message to Telegram
