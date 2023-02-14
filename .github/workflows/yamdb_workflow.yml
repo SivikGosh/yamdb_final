@@ -59,13 +59,14 @@ jobs:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
-        context: yamdb_final/infra/
+        context: infra/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           sudo docker-compose up -d --build
+          sudo docker image ps -a
 
   send_notification:
     name: Send message to Telegram
